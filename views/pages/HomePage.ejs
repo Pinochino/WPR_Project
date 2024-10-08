@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%- include('../partials/Head'); %>
+        <link rel="stylesheet" type="text/css" href="/HomePage.css" />
+</head>
+
+<body>
+    <header>
+        <%- include('../partials/Header'); %>
+    </header>
+    <main class="container">
+        <form method="get">
+            <h3>Login Page</h3>
+            <div class="form-group">
+                <label for="username">Username: </label>
+                <input type="text" placeholder="Please enter username: " autocomplete="additional-name" id="username" />
+                <span><i class="fa-solid fa-user form-icon"></i></span>
+                <p class="nameMessage"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password: </label>
+                <input type="password" placeholder="Please enter password: " autocomplete="new-password"
+                    id="password" />
+                <span><i class="fa-solid fa-lock form-icon"></i></span>
+                <p class="passwordMessage"></p>
+            </div>
+
+            <div class="form-middle">
+                <label><input type="checkbox" name="" id="">Remember me</label>
+                <span>Forget password?</span>
+            </div>
+
+            <div class="form-bottom">
+                <button type="submit">Login</button>
+                <p>Don't have an account? <a href="#">Register</a></p>
+            </div>
+        </form>
+    </main>
+
+</body>
+
+</html>
