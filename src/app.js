@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const port = 8000;
+const dotenv = require('dotenv');
+dotenv.config();
 
 // Set view engine EJS
 app.set('view engine', 'ejs');
@@ -27,4 +28,4 @@ app.get('/detail-page', (req, res) => res.render('pages/DetailPage.ejs'));
 app.get('/outbox-page', (req, res) => res.render('pages/OutboxPage.ejs'));
 app.get('/compose-page', (req, res) => res.render('pages/ComposePage.ejs'));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`))
