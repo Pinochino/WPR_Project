@@ -1,4 +1,8 @@
-const dbConnect = require('../data/dbSetup')
+const { decryptText } = require('../config/crypto');
+const { connectDb } = require('../data/dbSetup');
+const keyCrypto = "myPassword123456";
+
+
 
 class HomeController {
     index(req, res) {
@@ -6,18 +10,14 @@ class HomeController {
     }
 
     async login(req, res) {
-        const { email, password } = req.body;
-        const user = [
-            email,
-            password
-        ]
-        let db;
         try {
-            db = await dbConnect();
-            const sql = 'SELECT EMAIL, PASSWORD FROM users';
-            const [rows] = await db.query(sql, user)
-            if (rows[0].email === email && rows[0].password === password) {
-                return res.status(200).redirect('/');
+            const { username, password } = req.body;
+            let db;
+            db = await connectDb();
+            const sql = 'SELECT USERNAME, PASSWORD FROM user WHERE USERNAME=?';
+            const [rows] = await db.query(sql, [username])
+            if (rows[0].USERNAME === username && decryptText(rows[0].PASSWORD, keyCrypto) === password) {
+                return res.status(200).redirect('/inbox');
             }
             return res.status(400).json({ message: `Fail to login` })
         } catch (error) {

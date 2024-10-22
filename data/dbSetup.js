@@ -23,20 +23,21 @@ async function setupDatabase() {
             id INT AUTO_INCREMENT PRIMARY KEY,
             username VARCHAR(255),
             email VARCHAR(255),
-            password VARCHAR(255)
+            password VARCHAR(255),
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )`
         await db.query(sql1);
         console.log("User table created successfully");
 
-        const sql2 = `CREATE TABLE IF NOT EXISTS email (
+        const sql2 = `CREATE TABLE IF NOT EXISTS emails (
         id INT AUTO_INCREMENT PRIMARY KEY,
         sender_id INT,
         recipient_id INT,
         subject VARCHAR(255),
         message TEXT,
         timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (sender_id) REFERENCES users(id),
-        FOREIGN KEY (recipient_id) REFERENCES users(id)
+        FOREIGN KEY (sender_id) REFERENCES user(id),
+        FOREIGN KEY (recipient_id) REFERENCES user(id)
       );`
         await db.query(sql2);
         console.log("Email table created successfully");

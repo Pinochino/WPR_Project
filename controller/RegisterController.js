@@ -1,6 +1,8 @@
 const { encryptText } = require("../config/crypto");
 const { connectDb } = require("../data/dbSetup");
 const crypto = require('crypto');
+const keyCrypto = "myPassword123456";
+
 
 class RegisterController {
     index(req, res) {
@@ -9,27 +11,30 @@ class RegisterController {
 
     async create(req, res) {
         const { username, email, password } = req.body;
+        let errors = [];
 
         if (!username || !email || !password) {
             return res.status(400).json({ message: `Username, email, password are required` })
         }
-        const USERNAME_REGEX = /^[a-zA-Z]{3,}$/;
+        const USERNAME_REGEX = /^[\p{L}\s]{3,}$/u
         const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const PASSWORD_REGEX = /^.{6,}$/;
 
         if (!USERNAME_REGEX.test(username)) {
-            return res.status(400).json({ message: "Username is not valid" });
+            errors.push("Username is not valid");
         }
 
         if (!EMAIL_REGEX.test(email)) {
-            return res.status(400).json({ message: "Email is not valid" });
+            errors.push("Email is not valid");
         }
 
         if (!PASSWORD_REGEX.test(password)) {
-            return res.status(400).json({ message: "Password must be at least 6 characters" });
+            errors.push("Password must be at least 6 characters");
         }
 
-        const keyCrypto = "myPassword123";
+        if (errors.length > 0) {
+            return res.render('SignUp', { errors })
+        }
         const encryptedPassword = encryptText(password, keyCrypto);
 
         const user = [

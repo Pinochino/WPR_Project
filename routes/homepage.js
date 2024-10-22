@@ -5,6 +5,6 @@ const route = Router();
 const homeController = new HomeController();
 
 route.get('/', homeController.index)
-route.post('/login', homeController.login);
+route.post('/', homeController.login);
 
 module.exports = route;
