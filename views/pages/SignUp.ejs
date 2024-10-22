@@ -3,13 +3,11 @@
 
 <head>
     <%- include('../partials/Head'); %>
-        <link rel="stylesheet" type="text/css" href="/HomePage.css" />
+        <link rel="stylesheet" type="text/css" href="/CSS/HomePage.css" />
 </head>
 
 <body>
-    <header>
-        <%- include('../partials/Header'); %>
-    </header>
+
     <main class="container">
         <form method="post">
             <h3>Register Page</h3>
@@ -18,6 +16,13 @@
                 <input type="text" placeholder="Please enter username: " autocomplete="additional-name" />
                 <span><i class="fa-solid fa-user form-icon"></i></span>
                 <p class="nameMessage"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Username: </label>
+                <input type="text" placeholder="Please enter email: " autocomplete="email" />
+                <span><i class="fa-solid fa-user form-icon"></i></span>
+                <p class="emailMessage"></p>
             </div>
 
             <div class="form-group">
@@ -34,14 +39,9 @@
                 <p class="rePasswordMessage"></p>
             </div>
 
-            <div class="form-middle">
-                <label><input type="checkbox" name="" id="">Remember me</label>
-                <span>Forget password?</span>
-            </div>
-
             <div class="form-bottom">
-                <button type="submit">Login</button>
-                <p>Don't have an account? <a href="#">Register</a></p>
+                <button type="submit">Regitser</button>
+                <p>Already had an account? <a href="/">Login</a></p>
             </div>
         </form>
     </main>

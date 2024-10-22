@@ -3,15 +3,12 @@
 
 <head>
     <%- include('../partials/Head'); %>
-        <link rel="stylesheet" type="text/css" href="/HomePage.css" />
+        <link rel="stylesheet" type="text/css" href="/CSS/HomePage.css" />
 </head>
 
 <body>
-    <header>
-        <%- include('../partials/Header'); %>
-    </header>
     <main class="container">
-        <form method="get">
+        <form>
             <h3>Login Page</h3>
             <div class="form-group">
                 <label for="username">Username: </label>
@@ -35,7 +32,7 @@
 
             <div class="form-bottom">
                 <button type="submit">Login</button>
-                <p>Don't have an account? <a href="#">Register</a></p>
+                <p>Don't have an account? <a href="/register">Register</a></p>
             </div>
         </form>
     </main>
