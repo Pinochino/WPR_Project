@@ -4,6 +4,6 @@ const InboxController = require("../controller/InboxController");
 const route = Router();
 const inboxController = new InboxController();
 
-route.get('/', inboxController.index)
+route.get('/', inboxController.read)
 
 module.exports = route;

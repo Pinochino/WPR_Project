@@ -3,7 +3,7 @@
 
 <head>
     <%- include('../partials/Head') %>
-    <link rel="stylesheet" href="/CSS/InboxPage.css">
+        <link rel="stylesheet" href="/CSS/InboxPage.css">
 </head>
 
 <body>
@@ -12,10 +12,27 @@
     </header>
     <div class="container">
         <%- include('../partials/Sidebar') %>
-        <div class="content">
-            <h1>Inbox Page</h1>
-        </div>
+            <div class="content">
+                <div class="main">
+                    <% if (emails.length > 0) { %>
+                        <% emails.forEach(email => { %>
+                            <div class="email-item">
+                                <input type="checkbox" name="emailCheckbox" id="email_<%= email.id %>">
+                                <span><%= email.SUBJECT %></span>
+                                <span><%= email.MESSAGE %></span>
+                                <span><%= email.TIMESTAMP %></span>
+                            </div>
+                        <% }); %>
+                    <% } else { %>
+                        <p>No emails available.</p>
+                    <% } %>
+            </div>
     </div>
+
+    <script>
+        const main = document.querySelector('.main');
+
+    </script>
 </body>
 
 </html>
