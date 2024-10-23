@@ -67,3 +67,21 @@ form > * {
 label, span, p {
     font-size: 15px;
 }
+
+.invalid {
+    color: red;
+}
+
+.form-group.invalid label {
+    color: black;
+}
+
+.form-group.invalid input{
+    outline: none;
+    border: 1px solid red;
+}
+
+.form-group input{
+    outline: none;
+    border: 1px solid green;
+}

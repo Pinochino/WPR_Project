@@ -1,0 +1,13 @@
+.samples {
+    position: fixed;
+    background-color:  red;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100vh;
+    width: 15.75rem;
+    align-items: center;
+    overflow-y: unset;
+    left: 0;
+
+}

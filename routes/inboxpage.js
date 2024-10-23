@@ -1,10 +1,9 @@
 const { Router } = require('express')
-const InboxXController = require("../controller/InboxController");
+const InboxController = require("../controller/InboxController");
 
 const route = Router();
-const inboxController = new InboxXController();
+const inboxController = new InboxController();
 
 route.get('/', inboxController.index)
-// route.post('/', homeController.login);
 
 module.exports = route;

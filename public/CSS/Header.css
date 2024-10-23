@@ -1,0 +1,84 @@
+header {
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, .12), inset 0 -1px 0 0 #dadce0;
+    height: 3.75rem;
+}
+
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 min(1.5rem);
+    align-items: center;
+    height: 3.75rem;
+}
+
+#navbar span a svg {
+    color: #5f6368;
+    opacity: 1;
+}
+
+.logo-brand {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    margin-right: 0.4rem;
+}
+
+.logo span {
+    font-size: 1rem;
+    line-height: 28px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo>*:not(:first-child) {
+    margin-left: 1rem;
+}
+
+.mode {
+    flex: 0.2;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.mode span:last-child img {
+    border-radius: 50%;
+}
+
+.search {
+    flex: 0.7;
+}
+
+.search input {
+    width: 720px;
+    height: 3rem;
+    border-radius: 10px;
+    padding: 0 2.5rem;
+    position: relative;
+    border: none;
+    outline: none;
+    background: #EAF1FB;
+}
+
+.searchBtn {
+    position: absolute;
+    z-index: 1;
+    transform: translate(10px, 12px);
+    outline: none;
+    background: transparent;
+    border: none;
+}
+
+.filter {
+    position: absolute;
+    z-index: 1;
+    transform: translate(-37px, 12px);
+    outline: none;
+    background: transparent;
+    border: none;
+}
+

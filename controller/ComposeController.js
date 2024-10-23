@@ -1,6 +1,6 @@
 class ComposeController {
     index(req, res) {
-        res.render('ComposePose');
+        res.render('ComposePage');
     }
 
 

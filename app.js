@@ -13,6 +13,7 @@ const { connectDb, setupDatabase } = require('./data/dbSetup');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views', 'pages'));
 
+
 // Adding css to file ejs
 app.use(express.static(path.join(__dirname, 'public')));
 
