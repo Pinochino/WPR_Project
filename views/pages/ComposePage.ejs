@@ -12,9 +12,33 @@
     </header>
     <div class="container">
         <%- include('../partials/Sidebar') %>
-        <div class="content">
-            <h1>Compose Page</h1>
-        </div>
+            <form class="content">
+                <div class="receiver">
+                    <label for="receiver">Choose a car:</label>
+                    <select name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+
+                    <div class="subject">
+                        <label for="subject">Tiêu đề: </label>
+                        <input type="text" name="subject" id="subjectInput">
+                    </div>
+
+                    <div class="message">
+                        <label for="message">Nhập nội dung: </label>
+                        <textarea name="message" id="messageInput"></textarea>
+                    </div>
+
+                    <div class="file">
+                        <input type="file" id="myFile" name="file">
+                    </div>
+
+                    <button type="submit">Send</button>
+                </div>
+            </form>
     </div>
 </body>
 

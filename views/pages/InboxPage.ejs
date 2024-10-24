@@ -3,36 +3,95 @@
 
 <head>
     <%- include('../partials/Head') %>
-        <link rel="stylesheet" href="/CSS/InboxPage.css">
+        <link rel="stylesheet" href="/CSS/InboxPage.css" />
 </head>
 
 <body>
-    <header>
-        <%- include('../partials/Header') %>
-    </header>
+    <header><%- include('../partials/Header') %></header>
     <div class="container">
         <%- include('../partials/Sidebar') %>
             <div class="content">
-                <div class="main">
-                    <% if (emails.length > 0) { %>
-                        <% emails.forEach(email => { %>
+                <div class="main" id="emailList">
+                    <button class="deleteBtn">Xoá</button>
+
+                    <% if (data.length> 0) { %>
+                        <% data.forEach(email=> { %>
                             <div class="email-item">
-                                <input type="checkbox" name="emailCheckbox" id="email_<%= email.id %>">
-                                <span><%= email.SUBJECT %></span>
-                                <span><%= email.MESSAGE %></span>
-                                <span><%= email.TIMESTAMP %></span>
+                                <a href="/email-detail/<%= email.ID %>">
+                                    <input type="checkbox" name="emailCheckbox" class="email_<%= email.ID %>" />
+                                    <span>
+                                        <%= email.SUBJECT %>
+                                    </span>
+                                    <span>
+                                        <%= email.MESSAGE %>
+                                    </span>
+                                    <span>
+                                        <%= email.RECEIVED_AT %>
+                                    </span>
+                                </a>
                             </div>
-                        <% }); %>
-                    <% } else { %>
-                        <p>No emails available.</p>
-                    <% } %>
+                            <% }) %>
+
+                                <!-- Pagination Links -->
+                                <div class="pagination">
+                                    <% if (page> 1) { %>
+                                        <a href="/inbox?page=<%= page - 1 %>">Before</a>
+                                        <% } %>
+
+                                            <% for (let i=iterator; i <=endingLink; i++) { %>
+                                                <% if (i===page) { %>
+                                                    <a href="/inbox?page=<%= i %>" class="selectedLink">
+                                                        <%= i %>
+                                                    </a>
+                                                    <% } else { %>
+                                                        <a href="/inbox?page=<%= i %>">
+                                                            <%= i %>
+                                                        </a>
+                                                        <% } %>
+                                                            <% } %>
+
+                                                                <% if (page < numberOfPages) { %>
+                                                                    <a href="/inbox?page=<%= page + 1 %>">After</a>
+                                                                    <% } %>
+                                </div>
+                                <% } else { %>
+                                    <p>No emails available.</p>
+                                    <% } %>
+
+
+
+                </div>
             </div>
     </div>
 
-    <script>
-        const main = document.querySelector('.main');
+    <!-- <script>
+        document.addEventListener("DOMContentLoaded", init);
 
-    </script>
+        async function init() {
+            const paginationLinks = document.querySelectorAll(".pagination a");
+
+            paginationLinks.forEach((link) => {
+                link.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    const page = link.getAttribute("data-page");
+
+                    const response = await fetch(`/inbox?page=${page}`);
+                    const data = await response.text();
+
+                    // Tạo một phần tử tạm thời để lấy nội dung HTML mới
+                    const tempDiv = document.createElement("div");
+                    tempDiv.innerHTML = data;
+
+                    // Cập nhật chỉ nội dung bên trong #emailList
+                    const newEmailList = tempDiv.querySelector("#emailList");
+                    document.querySelector("#emailList").innerHTML = newEmailList.innerHTML;
+
+                    // Cập nhật URL mà không làm mới trang
+                    window.history.pushState({ page }, "", `?page=${page}`);
+                });
+            });
+        }
+    </script> -->
 </body>
 
 </html>

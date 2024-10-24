@@ -8,7 +8,6 @@ const multer = require('multer');
 const { connectDb, setupDatabase } = require('./data/dbSetup');
 
 
-
 // Set view engine EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views', 'pages'));
