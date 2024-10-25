@@ -32,7 +32,7 @@ class InboxController {
 
             // Get the relevant number of POSTS for this starting page
             sql = `SELECT ID, SUBJECT, MESSAGE, RECEIVED_AT FROM EMAILS WHERE RECIPIENT_ID = ? AND IS_DELETED_BY_RECIPIENT = FALSE LIMIT ${startingLimit}, ${resultPerPage}`;
-            
+
             [rows] = await db.query(sql, userId);
             let iterator = (page - 5) < 1 ? 1 : page - 5;
             let endingLink = (iterator + 9) <= numberOfPages ? (iterator + 9) : page + (numberOfPages - page);
@@ -49,60 +49,6 @@ class InboxController {
         }
     }
 
-    // [GET] /inbox?totalPages=
-    async countPage(req, res) {
-        let db;
-        const PAGE_SIDE = 5;
-        try {
-            const sql = `SELECT COUNT(*) AS totalEmails FROM emails`;
-            db = await connectDb();
-            const [rows] = await db.query(sql);
-
-            const totalEmails = rows[0].totalEmails;
-            const totalPages = Math.ceil(totalEmails / PAGE_SIDE)
-            res.json({
-                totalEmails,
-                totalPages
-            })
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ message: `${error}` })
-        }
-    }
-
-    // [DELETE] /inbox/delete/:id
-    async deleteById(req, res) {
-        const { id } = req.body;
-        console.log(id);
-        // let db;
-        // try {
-        //     db = await connectDb();
-        //     const sql = ``;
-        //     const [rows] = await db.query(sql);
-        //     if (rows.affectedRows) {
-        //         return res.status(200).json({ message: `Delete email by ${id}` })
-        //     }
-        //     return res.status(400).json({ message: `Cannot delete the email` })
-        // } catch (error) {
-        //     return res.status(500).json({ message: `${error}` })
-        // }
-    }
-
-    // [DELETE] /inbox/deleteAll
-    async deleteAll(req, res) {
-        let db;
-        try {
-            db = await connectDb();
-            const sql = ``;
-            const [rows] = await db.query(sql);
-            if (rows.affectedRows) {
-                return res.status(200).json({ message: `Delete email by ${id}` })
-            }
-            return res.status(400).json({ message: `Cannot delete the email` })
-        } catch (error) {
-            return res.status(500).json({ message: `${error}` })
-        }
-    }
 
     async handleFormAction(req, res) {
         const { emailIds } = req.body;
@@ -134,8 +80,6 @@ class InboxController {
         }
     }
 
-
-
     async getInboxEmails(req, res) {
         const userId = req.user.id;
 
@@ -153,6 +97,17 @@ class InboxController {
         } catch (error) {
             return res.status(500).json({ error: `An error occurred: ${error.message}` });
         }
+    }
+
+    async logout(req, res) {
+        try {
+            await res.clearCookie('userId');
+            await res.clearCookie('username');
+            return res.status(200).json({ message: `Logout successfully` });
+        } catch (error) {
+            return res.status(500).json({ message: `${error}` });
+        }
+
     }
 }
 
