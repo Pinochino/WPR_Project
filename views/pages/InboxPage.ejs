@@ -92,8 +92,9 @@
       // Checl all submit button clicked
       checkAllSubmitBtn.onclick = function (e) {
         if (this.hasAttribute('disabled')) {
-        e.preventDefault();  // Chỉ ngăn chặn nếu nút bị vô hiệu hóa
-    }
+          e.preventDefault();  // Chỉ ngăn chặn nếu nút bị vô hiệu hóa
+        }
+        alert('Deleted successfully')
       }
 
       // Email item checkbox changed

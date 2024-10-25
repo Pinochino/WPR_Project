@@ -3,7 +3,6 @@ const { connectDb } = require('../data/dbSetup');
 const keyCrypto = "myPassword123456";
 
 
-
 class HomeController {
     index(req, res) {
         res.render('HomePage');
@@ -14,9 +13,11 @@ class HomeController {
             const { username, password } = req.body;
             let db;
             db = await connectDb();
-            const sql = 'SELECT USERNAME, PASSWORD FROM user WHERE USERNAME=?';
+            const sql = 'SELECT ID, USERNAME, PASSWORD FROM user WHERE USERNAME=?';
             const [rows] = await db.query(sql, [username])
             if (rows[0].USERNAME === username && decryptText(rows[0].PASSWORD, keyCrypto) === password) {
+                res.cookie('userId', rows[0].ID);
+                res.cookie('username', rows[0].USERNAME);
                 return res.status(200).redirect('/inbox');
             }
             return res.status(400).json({ message: `Fail to login` })

@@ -10,6 +10,7 @@ class InboxController {
     // [GET] /inbox?page=
     async read(req, res) {
         const resultPerPage = parseInt(req.params.limit) || 5;
+        const userId = req.cookies.userId;
 
         let db;
         try {
@@ -30,8 +31,9 @@ class InboxController {
             const startingLimit = (page - 1) * resultPerPage;
 
             // Get the relevant number of POSTS for this starting page
-            sql = `SELECT ID, SUBJECT, MESSAGE, RECEIVED_AT FROM EMAILS LIMIT ${startingLimit}, ${resultPerPage}`;
-            [rows] = await db.query(sql);
+            sql = `SELECT ID, SUBJECT, MESSAGE, RECEIVED_AT FROM EMAILS WHERE RECIPIENT_ID = ? AND IS_DELETED_BY_RECIPIENT = FALSE LIMIT ${startingLimit}, ${resultPerPage}`;
+            
+            [rows] = await db.query(sql, userId);
             let iterator = (page - 5) < 1 ? 1 : page - 5;
             let endingLink = (iterator + 9) <= numberOfPages ? (iterator + 9) : page + (numberOfPages - page);
             if (endingLink < ((page + 4))) {
@@ -103,15 +105,26 @@ class InboxController {
     }
 
     async handleFormAction(req, res) {
-        const { emailIds } = req.body.emailIds
+        const { emailIds } = req.body;
+        console.log(emailIds);
+        const userId = req.cookies.userId;
+        console.log('user id: ', userId);
+
         if (!emailIds || emailIds.length === 0) {
             return res.status(400).json({ message: 'No emails selected for deletion' });
         }
+
+        const placeholders = emailIds.map(() => '?').join(', ');
+        console.log('ids: ', placeholders);
         let db;
         try {
-            let sql = `DELETE FROM emails WHERE id IN (?) AND userId = ?`;
+            let sql = `UPDATE emails 
+                 SET is_deleted_by_recipient = TRUE 
+                 WHERE recipient_id = ? AND id IN (${placeholders})`;
             db = await connectDb();
-            const [rows] = await db.query(sql, [emailIds, req.user.id]);
+            const [rows] = await db.query(sql, [userId, ...emailIds]);
+            console.log('rows: ', [rows]);
+            console.log('affect rows: ', rows.affectedRows);
             if (rows.affectedRows) {
                 return res.status(200).json({ message: `Deleted successfully ${_ids}` })
             }
@@ -119,17 +132,30 @@ class InboxController {
         } catch (error) {
             return res.status(500).json({ error: `${error}` })
         }
+    }
 
-        switch (key) {
-            case 'delete':
 
-                break;
 
-            default:
-                return res.json({ message: `Action is invalid` })
-                break;
+    async getInboxEmails(req, res) {
+        const userId = req.user.id;
+
+        let db;
+        try {
+            db = await connectDb();
+
+            // Truy vấn chỉ lấy các email chưa bị xóa bởi người nhận
+            const sql = `SELECT * FROM emails 
+                       WHERE recipient_id = ? AND is_deleted_by_recipient = FALSE`;
+
+            const [rows] = await db.query(sql, [userId]);
+
+            return res.status(200).json(rows);
+        } catch (error) {
+            return res.status(500).json({ error: `An error occurred: ${error.message}` });
         }
     }
 }
+
+
 
 module.exports = InboxController;

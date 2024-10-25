@@ -4,6 +4,7 @@ const inboxRouter = require('./inboxpage');
 const composeRouter = require('./composepage');
 const outboxRouter = require('./outboxpage');
 const emailRouter = require('./emailpage');
+const authMiddleware = require('../middleware/authMiddleWare');
 
 function route(app) {
     app.use('/', homeRouter);

@@ -6,6 +6,9 @@ const path = require('path')
 const app = express();
 const multer = require('multer');
 const { connectDb, setupDatabase } = require('./data/dbSetup');
+const cookieParser = require('cookie-parser');
+
+
 
 
 // Set view engine EJS
@@ -20,6 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(multer().none());
+
+
+// cookie-parser
+app.use(cookieParser());
 
 //connect Database
 connectDb();

@@ -3,43 +3,97 @@
 
 <head>
     <%- include('../partials/Head') %>
-
+        <link rel="stylesheet" href="/CSS/InboxPage.css" />
 </head>
 
 <body>
-    <header>
-        <%- include('../partials/Header') %>
-    </header>
+    <header><%- include('../partials/Header') %></header>
     <div class="container">
         <%- include('../partials/Sidebar') %>
-            <form class="content">
-                <div class="receiver">
-                    <label for="receiver">Choose a car:</label>
-                    <select name="cars" id="cars">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
-                    </select>
+            <div class="content">
+                <form class="container-form" method="post" action="/compose/send-email">
+                    <div class="recipient-group">
+                        <label for="recipient">Chọn người nhận:</label>
+                        <select name="recipient" id="recipient">
 
-                    <div class="subject">
-                        <label for="subject">Tiêu đề: </label>
-                        <input type="text" name="subject" id="subjectInput">
+                        </select>
+
+                        <div class="subject">
+                            <label for="subject">Tiêu đề: </label>
+                            <input type="text" name="subject" id="subjectInput">
+                        </div>
+
+                        <div class="message">
+                            <label for="message">Nhập nội dung: </label>
+                            <textarea name="message" id="messageInput"></textarea>
+                        </div>
+
+                        <div class="file">
+                            <input type="file" id="myFile" name="file">
+                        </div>
+
+                        <button type="submit">Send</button>
                     </div>
-
-                    <div class="message">
-                        <label for="message">Nhập nội dung: </label>
-                        <textarea name="message" id="messageInput"></textarea>
-                    </div>
-
-                    <div class="file">
-                        <input type="file" id="myFile" name="file">
-                    </div>
-
-                    <button type="submit">Send</button>
-                </div>
-            </form>
+                </form>
+            </div>
     </div>
+    </div>
+    <script>
+        window.addEventListener('DOMContentLoaded', getRecipients);
+
+
+        function getRecipients() {
+            const API = `http://localhost:8000/compose/username`;
+            fetch(API)
+                .then(res => statusCheck(res))
+                .then(data => data.json())
+                .then(res => displayRecipients(res))
+                .catch(err => handleError(err));
+        }
+
+        function displayRecipients(data) {
+            const selectRecipient = id('recipient');
+            selectRecipient.innerHTML = '';
+
+            const option = document.createElement('option');
+            option.textContent = 'Please enter recipients';
+            option.value = '';
+            selectRecipient.appendChild(option);
+            const recipients = data[0];
+
+
+            recipients.forEach((item) => {
+                if (item && item.USERNAME) {
+                    const option = document.createElement('option');
+                    option.textContent = item.USERNAME;
+                    option.value = item.USERNAME.toLowerCase();
+                    selectRecipient.appendChild(option);
+                } else {
+                    console.warn('Dữ liệu không hợp lệ:', item);
+                }
+            });
+        }
+
+
+
+        function handleError(error) {
+            if (error) {
+                console.error(error);
+            }
+            return error;
+        }
+
+        async function statusCheck(res) {
+            if (!res.ok) {
+                throw new Error(await res.text())
+            }
+            return res;
+        }
+
+        function id(params) {
+            return document.getElementById(params)
+        }
+    </script>
 </body>
 
 </html>

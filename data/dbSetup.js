@@ -38,6 +38,8 @@ async function setupDatabase() {
         file TEXT,
         send_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         received_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+        is_deleted_by_recipient BOOLEAN DEFAULT FALSE,
+        is_eleted_by_sender BOOLEAN DEFAULT FALSE,
         FOREIGN KEY (sender_id) REFERENCES user(id),
         FOREIGN KEY (recipient_id) REFERENCES user(id)
       );`
