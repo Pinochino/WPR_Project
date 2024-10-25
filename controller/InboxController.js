@@ -71,18 +71,19 @@ class InboxController {
     // [DELETE] /inbox/delete/:id
     async deleteById(req, res) {
         const { id } = req.body;
-        let db;
-        try {
-            db = await connectDb();
-            const sql = ``;
-            const [rows] = await db.query(sql);
-            if (rows.affectedRows) {
-                return res.status(200).json({ message: `Delete email by ${id}` })
-            }
-            return res.status(400).json({ message: `Cannot delete the email` })
-        } catch (error) {
-            return res.status(500).json({ message: `${error}` })
-        }
+        console.log(id);
+        // let db;
+        // try {
+        //     db = await connectDb();
+        //     const sql = ``;
+        //     const [rows] = await db.query(sql);
+        //     if (rows.affectedRows) {
+        //         return res.status(200).json({ message: `Delete email by ${id}` })
+        //     }
+        //     return res.status(400).json({ message: `Cannot delete the email` })
+        // } catch (error) {
+        //     return res.status(500).json({ message: `${error}` })
+        // }
     }
 
     // [DELETE] /inbox/deleteAll
@@ -98,6 +99,35 @@ class InboxController {
             return res.status(400).json({ message: `Cannot delete the email` })
         } catch (error) {
             return res.status(500).json({ message: `${error}` })
+        }
+    }
+
+    async handleFormAction(req, res) {
+        const { emailIds } = req.body.emailIds
+        if (!emailIds || emailIds.length === 0) {
+            return res.status(400).json({ message: 'No emails selected for deletion' });
+        }
+        let db;
+        try {
+            let sql = `DELETE FROM emails WHERE id IN (?) AND userId = ?`;
+            db = await connectDb();
+            const [rows] = await db.query(sql, [emailIds, req.user.id]);
+            if (rows.affectedRows) {
+                return res.status(200).json({ message: `Deleted successfully ${_ids}` })
+            }
+            return res.status(400).json({ message: `Fail to delete` });
+        } catch (error) {
+            return res.status(500).json({ error: `${error}` })
+        }
+
+        switch (key) {
+            case 'delete':
+
+                break;
+
+            default:
+                return res.json({ message: `Action is invalid` })
+                break;
         }
     }
 }

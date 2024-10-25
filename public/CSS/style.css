@@ -44,6 +44,15 @@ a {
   
   .pagination a:hover:not(.active) {background-color: #ddd;}
 
+  .inbox-head{
+    display: flex;
+    align-items: center;
+  }
+
+  .inbox-head > *:not(:first-child){
+    margin: 0 1rem;
+  }
+
 
 
 
