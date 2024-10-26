@@ -6,6 +6,17 @@ class ComposeController {
     }
 
     async create(req, res) {
+        const  notification = [
+            {
+                type: "success",
+                message: 'Email send successful',
+            },
+            {
+                type: "failure",
+                message: 'Email send failed',
+            }
+
+        ]
         let db;
         const sender_id = req.cookies.userId;
         const { recipient, subject, message, file } = req.body;
@@ -39,10 +50,9 @@ class ComposeController {
             const sql2 = `INSERT INTO EMAILS (SENDER_ID, RECIPIENT_ID, SUBJECT, MESSAGE, FILE)  VALUES (?, ?, ?, ?, ?)`;
             const [data] = await db.query(sql2, values);
             if (data.affectedRows > 0) {
-                return res.status(200).json({
-                    message: "Email sent successfully",
-                });
+                return res.status(200).render('ComposePage', {notification: notification[0]});
             }
+            return res.status(400).render('ComposePage', {notification: notification[1]});
         } catch (error) {
             return res.status(500).json({ message: `${error}` })
         }

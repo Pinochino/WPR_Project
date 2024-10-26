@@ -9,6 +9,10 @@ header {
     padding: 0 min(1.5rem);
     align-items: center;
     height: 3.75rem;
+    position: fixed;
+    width: 100%;
+    background-color: #fff;
+
 }
 
 #navbar span a svg {
@@ -19,7 +23,6 @@ header {
 .logo-brand {
     width: 100%;
     height: 100%;
-    background-color: #fff;
     margin-right: 0.4rem;
 }
 

@@ -5,6 +5,6 @@ const route = Router();
 const emailController = new EmailController();
 
 route.get('/:id', emailController.read);
-route.get('/:id/download', emailController.downloadFile);
+route.get('/download/:id', emailController.downloadFile);
 
 module.exports = route;

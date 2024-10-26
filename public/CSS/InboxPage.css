@@ -1,9 +1,10 @@
 .container {
     display: flex;
-    justify-content: space-between;
+    /*justify-content: space-between;*/
 }
 .content {
-    flex: 0.8345;
+    flex: 1;
     height: 100vh;
     background-color: green;
 }
+

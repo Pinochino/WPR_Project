@@ -1,13 +1,42 @@
+#sidebar {
+    width: 16rem;
+}
 .samples {
     position: fixed;
     background-color:  red;
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
-    height: 100vh;
-    width: 15.75rem;
+    height: 100%;
+    width: 16rem;
     align-items: center;
     overflow-y: unset;
     left: 0;
+    top: 3.8rem;
+    z-index: 1;
+}
 
+.samples > * {
+    margin: 1rem 0;
+}
+
+.write-email{
+    transition: box-shadow .08s linear, min-width .15s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 1px 2px 0 #0000, 0 1px 3px 1px #0000;
+    cursor: pointer;
+    background-color: #c2e7ff;
+    font-size: .875rem;
+    font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+    letter-spacing: normal;
+    height: 3.5rem;
+    padding: 0 24px 0 0;
+    width: 139px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.write-email > *{
+    margin:  0 0.5rem;
 }

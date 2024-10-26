@@ -21,16 +21,18 @@
         <p class="detail-body">
             <%= email.MESSAGE%>
         </p>
-
-            <a href="/email-detail/:id/download">Download File</a>
+        
+        <button onclick="downloadFile()">Download file</button>
 
     </div>
     <% }%>
 </div>
-</div>
 
 <script>
-
+    function downloadFile() {
+        const emailId = "<%= email.ID %>";
+        window.location.href = `/email-detail/download/${emailId}`; // Chuyển hướng trực tiếp đến URL download
+    }
 </script>
 </body>
 

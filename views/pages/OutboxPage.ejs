@@ -3,19 +3,129 @@
 
 <head>
     <%- include('../partials/Head') %>
-
+    <link rel="stylesheet" href="/CSS/InboxPage.css" />
 </head>
 
 <body>
-    <header>
-        <%- include('../partials/Header') %>
-    </header>
-    <div class="container">
-        <%- include('../partials/Sidebar') %>
-        <div class="content">
-            <h1>Outbox Page</h1>
-        </div>
+<header><%- include('../partials/Header') %></header>
+<!--  <header><%- include('../partials/Notification') %></header>-->
+
+<div class="container">
+    <%- include('../partials/Sidebar') %>
+    <div class="content">
+        <form class="container-form" method="post" action="/inbox/handle-form-action">
+            <div class="inbox-head">
+                <div class="form-check">
+                    <input type="checkbox" name="allCheckbox" class="form-check-input" id="checkbox-all" />
+                    <label class="form-check-label" for="checkbox-all">Chọn tất cả</label>
+                </div>
+
+                <select name="action" required>
+                    <option value="">--Chọn hành động--</option>
+                    <option value="delete">Xóa</option>
+                </select>
+
+                <button class="btn check-all-submit-btn" disabled>Thực hiện</button>
+            </div>
+
+            <% if (data.length> 0) { %> <% data.forEach(email=> { %>
+                <div class="email-item">
+                    <a href="/email-detail/<%= email.ID %>">
+                        <input type="checkbox" name="emailIds[]" class="email_<%= email.ID %>" value="<%= email.ID %>" />
+                        <span>
+                    <%= email.SUBJECT %>
+                  </span>
+                        <span>
+                    <%= email.MESSAGE %>
+                  </span>
+                        <span>
+                    <%= email.RECEIVED_AT %>
+                  </span>
+                    </a>
+                </div>
+            <% }) %>
+
+            <!-- Pagination Links -->
+            <div class="pagination">
+                <% if (page> 1) { %>
+                    <a href="/inbox?page=<%= page - 1 %>">Before</a>
+                <% } %>
+                <% for (let i=iterator; i <=endingLink; i++) { %>
+                    <% if (i===page) { %>
+                        <a href="/inbox?page=<%= i %>" class="selectedLink">
+                            <%= i %>
+                        </a>
+                    <% } else { %>
+                        <a href="/inbox?page=<%= i %>">
+                            <%= i %>
+                        </a>
+                    <% } %>
+                <% } %>
+                <% if (page < numberOfPages) { %>
+                    <a href="/inbox?page=<%= page + 1 %>">After</a>
+                <% } %>
+            </div>
+            <% } else { %>
+                <p>No emails available.</p>
+            <% } %>
     </div>
+</div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const checkboxAll = document.querySelector("#checkbox-all");
+        const emailItemCheckbox = document.querySelectorAll(
+            'input[name="emailIds[]"]'
+        );
+        const checkAllSubmitBtn = document.querySelector('.check-all-submit-btn');
+        const containerForm = document.querySelector('.container-form');
+
+
+        // Checkbox all click
+        checkboxAll.onchange = function () {
+            const isCheckedAll = checkboxAll.checked;
+            emailItemCheckbox.forEach((item) => {
+                item.checked = isCheckedAll;
+                renderCheckAllSubmitBtn();
+            });
+        };
+
+        // Checl all submit button clicked
+        checkAllSubmitBtn.onclick = function (e) {
+            if (this.hasAttribute('disabled')) {
+                e.preventDefault();  // Chỉ ngăn chặn nếu nút bị vô hiệu hóa
+            }
+            alert('Deleted successfully')
+        }
+
+        // Email item checkbox changed
+        emailItemCheckbox.forEach((item) => {
+            item.onchange = () => {
+                let isCheckedAll =
+                    emailItemCheckbox.length ===
+                    document.querySelectorAll('input[name="emailIds[]"]:checked')
+                        .length;
+                checkboxAll.checked = isCheckedAll;
+                renderCheckAllSubmitBtn();
+            };
+        });
+
+        // Rerender check all submit button
+        function renderCheckAllSubmitBtn() {
+            const checkedCount = document.querySelectorAll(
+                'input[name="emailIds[]"]:checked'
+            ).length;
+
+            if (checkedCount > 0) {
+                checkAllSubmitBtn.disabled = false;
+            } else {
+                checkAllSubmitBtn.disabled = true;
+            }
+
+        }
+    });
+</script>
 </body>
 
 </html>
