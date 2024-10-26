@@ -12,6 +12,10 @@ class InboxController {
         const resultPerPage = parseInt(req.params.limit) || 5;
         const userId = req.cookies.userId;
 
+        if (!userId || !resultPerPage) {
+            return res.status(200).redirect('/');
+        }
+
         let db;
         try {
             db = await connectDb();
@@ -101,13 +105,12 @@ class InboxController {
 
     async logout(req, res) {
         try {
-            await res.clearCookie('userId');
-            await res.clearCookie('username');
-            return res.status(200).json({ message: `Logout successfully` });
+            res.clearCookie('userId');
+            res.clearCookie('username');
+            return  res.status(200).redirect('/');
         } catch (error) {
             return res.status(500).json({ message: `${error}` });
         }
-
     }
 }
 

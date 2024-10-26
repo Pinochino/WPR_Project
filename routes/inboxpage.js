@@ -5,7 +5,7 @@ const route = Router();
 const inboxController = new InboxController();
 
 route.get('/', inboxController.read);
-route.post('/', inboxController.logout);
+route.delete('/logout', inboxController.logout);
 route.post('/handle-form-action', inboxController.handleFormAction);
 
 module.exports = route;

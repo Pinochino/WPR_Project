@@ -3,19 +3,35 @@
 
 <head>
     <%- include('../partials/Head') %>
-
+    <link rel="stylesheet" href="/CSS/InboxPage.css" />
 </head>
 
 <body>
-    <header>
-        <%- include('../partials/Header') %>
-    </header>
-    <div class="container">
-        <%- include('../partials/Sidebar') %>
-        <div class="content">
-            <h1>Email Detail Page</h1>
-        </div>
+<header><%- include('../partials/Header') %></header>
+<!--  <header><%- include('../partials/Notification') %></header>-->
+
+<div class="container">
+    <%- include('../partials/Sidebar') %>
+    <% if (email) { %>
+    <div class="content">
+        <h1 class="heading">
+            <%= email.SUBJECT%>
+        </h1>
+
+        <p class="detail-body">
+            <%= email.MESSAGE%>
+        </p>
+
+            <a href="/email-detail/:id/download">Download File</a>
+
     </div>
+    <% }%>
+</div>
+</div>
+
+<script>
+
+</script>
 </body>
 
 </html>

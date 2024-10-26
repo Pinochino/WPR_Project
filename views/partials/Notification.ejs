@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .notification {
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .notification.success {
+      background-color: #4CAF50; /* Green */
+    }
+
+    .notification.failure {
+      background-color: #f44336; /* Red */
+    }
+
+    .closebtn {
+      font-weight: bold;
+      font-size: 22px;
+      cursor: pointer;
+      margin-left: 15px;
+      transition: color 0.3s;
+    }
+
+    .closebtn:hover {
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+
+<% if (typeof notification !== 'undefined') { %>
+  <!-- Notification Alert -->
+  <div class="notification <%= notification.type %>">
+    <strong><%= notification.message %></strong>
+    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  </div>
+<% } %>
+
+<script>
+  // You can add any JavaScript functionality for the notification here if needed.
+</script>
+</body>
+
+</html>

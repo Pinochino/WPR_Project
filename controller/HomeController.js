@@ -9,6 +9,18 @@ class HomeController {
     }
 
     async login(req, res) {
+
+       const  notification = [
+           {
+               type: "success",
+               message: 'Login successful',
+           },
+           {
+               type: "failure",
+               message: 'Login failed',
+           }
+
+       ]
         try {
             const { username, password } = req.body;
             let db;
@@ -20,7 +32,7 @@ class HomeController {
                 res.cookie('username', rows[0].USERNAME);
                 return res.status(200).redirect('/inbox');
             }
-            return res.status(400).json({ message: `Fail to login` })
+            return res.status(400).render('HomePage', {notification: notification[1]});
         } catch (error) {
             return res.status(500).json({ message: `${error}` })
         }

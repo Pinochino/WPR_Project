@@ -79,29 +79,25 @@
                 dropdownContent.classList.toggle('active');
             })
 
-            document.addEventListener('click', () => {
+            document.addEventListener('click', (event) => {
                 if (!dropdownContent.contains(event.target) && !logo.contains(event.target)) {
                     dropdownContent.classList.remove('active');
                 }
             });
 
             logoutBtn.addEventListener('click', () => {
-                fetch('http://localhost:8000/compose', {
-                    method: 'POST'
-                })
-                    .then(res => statusCheck(res))
-                    .then(res => console.log('Logout successfully'))
-                    .catch(err => console.error('Error: ', err))
+                try{
+                    fetch('http://localhost:8000/inbox/logout', {
+                        method: 'DELETE'
+                    })
+                    window.location.href= '/';
+                }catch (error) {
+                    console.error('Error: ', error);
+                }
             })
         }
 
-        async function statusCheck(res) {
-            if (!res.ok) {
-                const errorData = await res.json(); // Get the response body
-                throw new Error(JSON.stringify(errorData)); // Convert to string for better logging
-            }
-            return res;
-        }
+
 
 
     </script>
