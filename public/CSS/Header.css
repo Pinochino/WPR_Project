@@ -6,12 +6,12 @@ header {
 #navbar {
     display: flex;
     justify-content: space-between;
-    padding: 0 min(1.5rem);
+    padding: 0 min(1.6rem);
     align-items: center;
     height: 3.75rem;
     position: fixed;
     width: 100%;
-    background-color: #fff;
+    background-color: #F6F8FC;
 
 }
 
@@ -29,6 +29,7 @@ header {
 .logo span {
     font-size: 1rem;
     line-height: 28px;
+    padding: 0 0.25rem;
 }
 
 .logo {
@@ -42,11 +43,31 @@ header {
 }
 
 .mode {
-    flex: 0.2;
+    flex: 0.15;
     display: flex;
     justify-content: space-around;
     align-items: center;
+    color: #5f6368;
 }
+.mode > span:first-child,
+span:nth-child(2)
+{
+    padding: 0.3rem;
+    line-height: 0.75rem;
+}
+.mode > a {
+    cursor: pointer;
+}
+.mode > span:nth-child(3)
+{
+    width: 0.75rem;
+}
+
+.mode > *:hover {
+    background-color: rgba(60, 64, 67, 0.1);
+    border-radius: 50px;
+}
+
 
 .mode span:last-child img {
     border-radius: 50%;
@@ -57,9 +78,9 @@ header {
 }
 
 .search input {
-    width: 720px;
+    width: 45rem;
     height: 3rem;
-    border-radius: 10px;
+    border-radius: 50px;
     padding: 0 2.5rem;
     position: relative;
     border: none;
@@ -93,13 +114,60 @@ header {
     display: none;
     position: absolute;
     right: 0;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    height: 5rem;
+    background-color: #F6F8FC;
+    min-width: 10rem;
+    height: fit-content;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    width: 436px;
+    min-height: 210px;
+    max-height: calc(-61px + 100dvh);
+    max-width: calc(-8px + 100vw);
+    margin-right: 4px;
+    margin-top: 57px;
+    border-radius: 20px;
 }
 
 .dropdown-content.active{
     display: block;
+}
+.dropdown-head{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdown-head .dropdown-logo{
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    margin: 0.4rem 0;
+}
+
+.dropdown-head span{
+font-size: 15px;
+font-weight: 400;
+line-height: 17px;
+}
+
+.dropdown-head a {
+    position: relative;
+    background: none;
+    border-radius: 100px;
+    border: 1px solid #747775;
+    display: inline-block;
+    outline: 0;
+    padding: 9px 23px 9px 23px;
+    text-align: center;
+    color: #2962ff;
+}
+
+.dropdown-head a:hover {
+    background: rgba(11, 87, 208, .12);
+}
+
+
+.dropdown-body {
+    background-color: white;
 }

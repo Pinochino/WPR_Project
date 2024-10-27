@@ -8,7 +8,7 @@ class InboxController {
     }
 
     // [GET] /inbox?page=
-    async read(req, res) {
+    async readEmail(req, res) {
         const resultPerPage = parseInt(req.params.limit) || 5;
         const userId = req.cookies.userId;
 
@@ -19,7 +19,7 @@ class InboxController {
         let db;
         try {
             db = await connectDb();
-            let sql = `SELECT ID, SUBJECT, MESSAGE, RECEIVED_AT FROM EMAILS`;
+            let sql = `SELECT ID, SUBJECT, MESSAGE,  RECEIVED_AT FROM EMAILS`;
             let [rows] = await db.query(sql);
             const numOfResult = rows.length;
             const numberOfPages = Math.ceil(numOfResult / resultPerPage);
@@ -35,7 +35,7 @@ class InboxController {
             const startingLimit = (page - 1) * resultPerPage;
 
             // Get the relevant number of POSTS for this starting page
-            sql = `SELECT ID, SUBJECT, MESSAGE, RECEIVED_AT FROM EMAILS WHERE RECIPIENT_ID = ? AND IS_DELETED_BY_RECIPIENT = FALSE LIMIT ${startingLimit}, ${resultPerPage}`;
+            sql = `SELECT ID, SUBJECT, MESSAGE,  RECEIVED_AT FROM EMAILS WHERE RECIPIENT_ID = ? AND IS_DELETED_BY_RECIPIENT = FALSE LIMIT ${startingLimit}, ${resultPerPage}`;
 
             [rows] = await db.query(sql, userId);
             let iterator = (page - 5) < 1 ? 1 : page - 5;
@@ -44,8 +44,11 @@ class InboxController {
                 iterator -= (page + 4) - numberOfPages;
             }
 
+            const sql2 = `SELECT USERNAME, EMAIL FROM USER WHERE ID= ?`;
+            const [userInfor] = await db.query(sql2, userId);
+
             if (rows) {
-                return res.status(200).render('InboxPage', { data: rows, page, iterator, endingLink, numberOfPages })
+                return res.status(200).render('InboxPage', { data: rows, page, iterator, endingLink, numberOfPages, userInfor });
             }
             return res.status(400).json({ message: `Cannot fetch the data` })
         } catch (error) {
@@ -84,24 +87,7 @@ class InboxController {
         }
     }
 
-    async getInboxEmails(req, res) {
-        const userId = req.user.id;
 
-        let db;
-        try {
-            db = await connectDb();
-
-            // Truy vấn chỉ lấy các email chưa bị xóa bởi người nhận
-            const sql = `SELECT * FROM emails 
-                       WHERE recipient_id = ? AND is_deleted_by_recipient = FALSE`;
-
-            const [rows] = await db.query(sql, [userId]);
-
-            return res.status(200).json(rows);
-        } catch (error) {
-            return res.status(500).json({ error: `An error occurred: ${error.message}` });
-        }
-    }
 
     async logout(req, res) {
         try {

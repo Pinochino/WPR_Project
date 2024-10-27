@@ -56,14 +56,37 @@
                         </path>
                         <circle cx="12" cy="12" r="3.5"></circle>
                     </svg></a></span>
-            <span><a href=""><i class="fas fa-th" style="width: 100%; height: 100%"></i></a></span>
+            <span style="width: 1.5rem"><a class="gb_A" aria-label="Các ứng dụng của Google" href="https://www.google.com.vn/intl/vi/about/products?tab=mh" aria-expanded="false" role="button" tabindex="0"><svg class="gb_E" focusable="false" viewBox="0 0 24 24"><path d="M6,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM6,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM12,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM16,6c0,1.1 0.9,2 2,2s2,-0.9 2,-2 -0.9,-2 -2,-2 -2,0.9 -2,2zM12,8c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,14c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2zM18,20c1.1,0 2,-0.9 2,-2s-0.9,-2 -2,-2 -2,0.9 -2,2 0.9,2 2,2z"></path><image src="https://ssl.gstatic.com/gb/images/bar/al-icon.png" alt="" height="24" width="24" style="border:none;display:none \9"></image></svg></a></span>
             <span class="dropbtn"><img
                     src="https://lh3.googleusercontent.com/ogw/AF2bZyii2YbnsnrGaSXDCZ4LhgFhHfX8ujKBGke7ww5cGGz9QDs=s32-c-mo"
                     alt="image" /></span>
         </div>
     </nav>
     <div class="dropdown-content">
-        <button class="logoutBtn">Logout</button>
+        <% if (userInfor.length> 0) { %> <% userInfor.forEach(email=> { %>
+           <div class="close-dropdown"> <i class="fa-solid fa-xmark"></i></div>
+        <div class="dropdown-head">
+            <span><%= email.EMAIL %></span>
+            <img class="dropdown-logo" src="https://lh3.googleusercontent.com/ogw/AF2bZyii2YbnsnrGaSXDCZ4LhgFhHfX8ujKBGke7ww5cGGz9QDs=s32-c-mo" />
+            <p>Chào <%= email.USERNAME%></p>
+            <a href="#">Quản lý tài khoản Google của bạn</a>
+        </div>
+        <% }) %>
+            <% } %>
+            <div class="dropdown-body">
+                <div>
+                    <i class="fa-solid fa-plus"></i>
+                    <button>Thêm tài khoản</button>
+                </div>
+                <div>
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <button class="logoutBtn">Đăng xuất</button>
+                </div>
+            </div>
+        <div class="dropdown-bottom">
+            <p>Chính sách quyền riêng tư &#183;</p>
+            <p>Điều khoản dịch vụ</p>
+        </div>
     </div>
 
     <script>

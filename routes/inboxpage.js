@@ -4,7 +4,7 @@ const InboxController = require("../controller/InboxController");
 const route = Router();
 const inboxController = new InboxController();
 
-route.get('/', inboxController.read);
+route.get('/', inboxController.readEmail);
 route.delete('/logout', inboxController.logout);
 route.post('/handle-form-action', inboxController.handleFormAction);
 
